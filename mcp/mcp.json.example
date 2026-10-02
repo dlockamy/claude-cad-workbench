@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "gimp": {
+      "command": "uvx",
+      "args": ["gimp-agent-mcp", "serve"]
+    },
+    "freecad": {
+      "command": "uvx",
+      "args": [
+        "freecad-mcp",
+        "--freecadcmd", "/Applications/FreeCAD.app/Contents/Resources/bin/freecadcmd"
+      ]
+    }
+  }
+}

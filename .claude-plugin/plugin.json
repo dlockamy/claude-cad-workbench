@@ -1,0 +1,7 @@
+{
+  "name": "claude-cad-workbench",
+  "description": "Skills and a CAD agent for designing 3D-printable parts with Claude, headless FreeCAD and GIMP.",
+  "version": "0.1.0",
+  "author": { "name": "Douglas Lockamy" },
+  "license": "Apache-2.0"
+}
