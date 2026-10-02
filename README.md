@@ -72,8 +72,10 @@ installing, because each exists to run code on your machine.
 
 GIMP: `uvx gimp-agent-mcp install-plugin`, restart GIMP, then
 *Filters → Development → Start Agent Bridge*.
-FreeCAD: `./tools/install-freecad-addon.sh`, restart FreeCAD, pick the
-*MCP Addon* workbench, tick *Auto-Start Server*.
+FreeCAD: `./tools/install-freecad-addon.sh --autostart` (installs into the
+directory FreeCAD itself reports and enables auto-start), then restart FreeCAD —
+the RPC server comes up on `127.0.0.1:9875` with no clicks. Without
+`--autostart`, pick the *MCP Addon* workbench and tick *Auto-Start Server* by hand.
 
 **Security:** both bridges bind to loopback and expose an arbitrary-code
 endpoint (`gimp_run_python`, `execute_code`) that runs with your user's
@@ -86,6 +88,7 @@ on the FreeCAD addon's *Remote Connections* without setting an auth token.
 |---|---|---|
 | 2026-10-02 | `mount_plate.py` (good + deliberately broken), `doctor.sh`, `install.sh`, `install-freecad-addon.sh --dest`, `render_stl_iso.py` | FreeCAD 1.0.2, macOS |
 | 2026-10-02 | GIMP bridge 0.5.0: `install-plugin`, `doctor`, `smoke` (24 checks, headless), `mcp_probe.py` (39 tools; opened an image, read a pixel back to the known value) | GIMP 3.2.6, macOS |
+| 2026-10-02 | FreeCAD bridge 0.1.25: addon installed with `--autostart`, 17 tools, plate+boss−bore volume 49175.7 mm³ vs hand-computed 49175.7 through both `execute_code` and `execute_code_headless`; `get_view` screenshot | FreeCAD 1.0.2, macOS |
 | 2026-09-19 | `gimp-agent-mcp` 0.5.0 and `freecad-mcp` 0.1.24 driven over stdio; geometry read back and compared to a hand-computed volume | GIMP 3.2.6, FreeCAD 1.1.3, macOS |
 | 2026-09-26 | Headless and GUI FreeCAD, GIMP batch, Bambu Studio | Flatpak GIMP 3.2.6 + FreeCAD 1.1.3, Ubuntu 24.04 |
 

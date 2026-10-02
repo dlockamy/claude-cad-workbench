@@ -64,9 +64,12 @@ repo — copy its shape.
 
 All four of these were reproduced, not recalled:
 
-- **An uncaught exception exits 0.** FreeCAD prints
-  `Exception while processing file: … [msg]` and returns success. An `assert`
-  that fails — or a syntax error — looks green to CI.
+- **An uncaught exception exits 0 when you run a script *file*** (`freecadcmd
+  script.py`). FreeCAD prints `Exception while processing file: … [msg]` and
+  returns success. An `assert` that fails — or a syntax error — looks green to
+  CI. The inline form behaves differently: `freecadcmd -c "raise …"` exits 1,
+  which is why the FreeCAD MCP bridge's `execute_code_headless` (it uses `-c`)
+  reports failures correctly while a build script run as a file does not.
 - **A script that raises runs twice**: once with `__name__` set to the file's
   stem, then again as `__main__`. Side effects happen twice.
 - **`sys.exit(n)` does propagate** (exit code `n`). So: collect failures in a

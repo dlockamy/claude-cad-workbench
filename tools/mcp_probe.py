@@ -9,11 +9,41 @@ problem while it is still cheap, and shows the real (namespaced) tool names.
     mcp_probe.py call gimp_status '{}' -- uvx gimp-agent-mcp serve
     mcp_probe.py list  -- uvx freecad-mcp --freecadcmd /path/to/freecadcmd
 
+Text results are printed (long ones truncated). Image results are decoded and
+written to files -- under $MCP_PROBE_OUT, or a fresh temp dir -- and the path is
+printed, because a base64 screenshot in a terminal is just noise.
+
 stdlib only. Messages are newline-delimited JSON-RPC 2.0.
 """
+import base64
 import json
+import os
 import subprocess
 import sys
+import tempfile
+
+
+def show(res):
+    if "result" not in res:
+        print(json.dumps(res, indent=2)[:4000])
+        return
+    result = res["result"]
+    if result.get("isError"):
+        print("isError: true")
+    out = os.environ.get("MCP_PROBE_OUT") or tempfile.mkdtemp(prefix="mcp_probe_")
+    os.makedirs(out, exist_ok=True)
+    for i, c in enumerate(result.get("content", [])):
+        if c.get("type") == "image":
+            ext = (c.get("mimeType") or "image/png").split("/")[-1]
+            path = os.path.join(out, "image_%d.%s" % (i, ext))
+            with open(path, "wb") as f:
+                f.write(base64.b64decode(c["data"]))
+            print("image saved: %s" % path)
+        elif c.get("type") == "text":
+            text = c["text"]
+            print(text if len(text) <= 4000 else text[:4000] + "\n... [truncated %d chars]" % (len(text) - 4000))
+        else:
+            print(json.dumps(c)[:500])
 
 
 def main():
@@ -66,7 +96,7 @@ def main():
             if name not in {t["name"] for t in tools}:
                 sys.exit("no such tool %r (tools are namespaced -- try `list`)" % name)
             res = send("tools/call", {"name": name, "arguments": args})
-            print(json.dumps(res.get("result", res), indent=2)[:4000])
+            show(res)
         else:
             sys.exit(__doc__)
     finally:
