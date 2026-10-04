@@ -34,10 +34,11 @@ On macOS `freecadcmd` is at
 `install.sh` only ever replaces symlinks it created; it skips anything else
 and tells you. `./install.sh --uninstall` removes exactly what it added.
 
-Prefer not to touch `~/.claude`? The repo is also a Claude Code plugin
-(`claude plugin validate .` passes):
+Prefer not to touch `~/.claude`? The repo is also a Claude Code plugin, named
+`cad-workbench` (`claude plugin validate .` passes):
 `claude --plugin-dir /path/to/claude-cad-workbench` loads the skills and agent
-for that session only.
+for that session only, namespaced as `cad-workbench:parametric-cad-verify` and so on.
+(The plugin is not called `claude-cad-workbench`: names starting with `claude-` are reserved and fail validation.)
 
 ## The tutorial
 
@@ -113,6 +114,7 @@ on the FreeCAD addon's *Remote Connections* without setting an auth token.
 
 | Date | What | Where |
 |---|---|---|
+| 2026-10-04 | `claude plugin validate .` passes with the plugin named `cad-workbench`, and `claude --plugin-dir .` loads the 4 skills and the agent as `cad-workbench:*` (the old name `claude-cad-workbench` fails validation: reserved prefix) | Claude Code 2.1.288, Linux |
 | 2026-10-04 | `mount_plate.py` good (27 checks) and broken (5 failures), the `freecadcmd` exit-code table, the `/tmp` sandbox trap, `render_stl_iso.py`, `check_rig.py` and `examples/skinned-tube/` (Khronos validator 0/0), a headless Bambu Studio slice of the plate (1 h 37 m) and `slice_report.py` | FreeCAD 1.1.4 Flatpak, Bambu Studio 2.8.2, Linux |
 | 2026-10-02 | `mount_plate.py` (good + deliberately broken), `doctor.sh`, `install.sh`, `install-freecad-addon.sh --dest`, `render_stl_iso.py` | FreeCAD 1.0.2, macOS |
 | 2026-10-02 | GIMP bridge 0.5.0: `install-plugin`, `doctor`, `smoke` (24 checks, headless), `mcp_probe.py` (39 tools; opened an image, read a pixel back to the known value) | GIMP 3.2.6, macOS |
