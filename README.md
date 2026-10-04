@@ -73,6 +73,7 @@ Short on time: read parts 1 and 4, run the two commands at the end of part 4, an
 | `tools/doctor.sh` | Read-only environment check. |
 | `tools/install-freecad-addon.sh` | Installs the FreeCAD MCP addon into the directory FreeCAD itself reports. |
 | `tools/mcp_probe.py` | Stdlib-only stdio client: `initialize` → `tools/list` → `tools/call`, to prove a bridge before restarting Claude. |
+| `tools/slice_report.py` | Summarises a sliced G-code file and flags a tiny first layer (a model that slices "successfully" and will not stay on the bed). Standard library only. |
 | `tools/check_rig.py` | Fails a rigged `.glb` whose joints deform nothing (tutorial part 12). Standard library + numpy. |
 | `tools/render_stl_iso.py` | ~100-line z-buffered STL preview (numpy + Pillow) for display-less machines. |
 | `examples/skinned-tube/` | A tiny rigged tube, and a `RIG_BREAK=1` switch that writes the broken version `check_rig.py` must catch. |
@@ -112,6 +113,7 @@ on the FreeCAD addon's *Remote Connections* without setting an auth token.
 
 | Date | What | Where |
 |---|---|---|
+| 2026-10-04 | `mount_plate.py` good (27 checks) and broken (5 failures), the `freecadcmd` exit-code table, the `/tmp` sandbox trap, `render_stl_iso.py`, `check_rig.py` and `examples/skinned-tube/` (Khronos validator 0/0), a headless Bambu Studio slice of the plate (1 h 37 m) and `slice_report.py` | FreeCAD 1.1.4 Flatpak, Bambu Studio 2.8.2, Linux |
 | 2026-10-02 | `mount_plate.py` (good + deliberately broken), `doctor.sh`, `install.sh`, `install-freecad-addon.sh --dest`, `render_stl_iso.py` | FreeCAD 1.0.2, macOS |
 | 2026-10-02 | GIMP bridge 0.5.0: `install-plugin`, `doctor`, `smoke` (24 checks, headless), `mcp_probe.py` (39 tools; opened an image, read a pixel back to the known value) | GIMP 3.2.6, macOS |
 | 2026-10-02 | Both bridges as native Claude Code tools after restart: committed STEP loaded live = 24957.05 mm³ (hand-computed 24957.05); GIMP pixel read-back and grid-overlay render |

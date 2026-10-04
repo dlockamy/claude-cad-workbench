@@ -18,11 +18,11 @@ A slicer treats one file as one rigid body with one orientation. A flat panel wi
 
 ## The first real print
 
-The project this came out of, the [Dial Panel](https://github.com/slash-builder/hw-2015-dial-panel), is labelled BETA for exactly this reason: a real print found a ledge the slicer never warned about. **The same caveat applies to part 12's models: none has been sliced or printed.**
+The project this came out of, the [Dial Panel](https://github.com/slash-builder/hw-2015-dial-panel), is labelled BETA for exactly this reason: a real print found a ledge the slicer never warned about. **The same caveat applies to part 11's models: they slice, but none has been printed, and one would not have stayed on the bed.**
 
 ## What was actually run
 
-The README's [Verified on](../../README.md#verified-on) table lists each run with its date, machine and tool versions. The latest, 2026-10-04 on FreeCAD 1.1.4 (Linux Flatpak): the good and broken plate runs, the exit-code table, the `/tmp` sandbox trap, the renderer, and parts 11 and 12's tools.
+The README's [Verified on](../../README.md#verified-on) table lists each run with its date, machine and tool versions. The latest, 2026-10-04 on FreeCAD 1.1.4 (Linux Flatpak): the good and broken plate runs, the exit-code table, the `/tmp` sandbox trap, the renderer, a headless Bambu Studio 2.8.2 slice of the plate and of both private models, and parts 11 and 12's tools.
 
 **Not run:** Windows; GIMP 2.10; any slicer other than Bambu Studio; the FreeCAD bridge's FEM, parts-library and async tools; the *Start Agent Bridge* menu path in a live GUI window; Unity, Godot or Unreal for part 11's models. If something doesn't reproduce for you, an issue is more useful than a star.
 
