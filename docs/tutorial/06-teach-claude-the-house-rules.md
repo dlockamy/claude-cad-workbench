@@ -19,7 +19,7 @@ So far we have been doing the work by hand. Claude Code loads *skills*, folders 
 ./tools/doctor.sh   # read-only: what is installed, what is missing
 ```
 
-`install.sh` only replaces symlinks it created itself. Its first version would have silently swapped an existing symlink pointing somewhere else, so it now skips anything it doesn't own and says so. `./install.sh --uninstall` removes exactly what it added. Prefer not to touch `~/.claude`? Run `claude --plugin-dir /path/to/claude-cad-workbench` to load everything for one session.
+`install.sh` only replaces symlinks it created itself. Its first version would have silently swapped an existing symlink pointing somewhere else, so it now skips anything it doesn't own and says so. `./install.sh --uninstall` removes exactly what it added. Prefer not to touch `~/.claude`? Run `claude --plugin-dir /path/to/claude-cad-workbench` to load everything for one session; the plugin is named `cad-workbench`, so the skills appear as `cad-workbench:parametric-cad-verify` and the agent as `cad-workbench:mechanical-cad-engineer`.
 
 ## Use
 
