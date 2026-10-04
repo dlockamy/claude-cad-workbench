@@ -7,8 +7,10 @@ The idea in one line: Claude writes the CAD as *code*, runs it headless, and the
 code **fails loudly** when the geometry is wrong — so "it exported without an
 error" is never the bar.
 
-The long version, with the reasoning and the things that bit us, is the blog
-post: *Setting up FreeCAD, GIMP and Claude to design 3D models*
+**New here? Start with the [step-by-step tutorial](docs/tutorial/README.md)**: twelve short parts, each ending in a check you can run and
+a link to the next, from the first headless command to taking a drawing to a rigged glTF.
+
+The long version, in a single read, is the blog post: *Setting up FreeCAD, GIMP and Claude to design 3D models*
 (<https://dlockamy.com/blog/>).
 
 ![A mounting plate generated and verified by examples/mount-plate](docs/img/mount-plate-iso.png)
@@ -37,6 +39,27 @@ Prefer not to touch `~/.claude`? The repo is also a Claude Code plugin
 `claude --plugin-dir /path/to/claude-cad-workbench` loads the skills and agent
 for that session only.
 
+## The tutorial
+
+Twelve short parts; each links to the next, so you can read straight through. [Start with part 1](docs/tutorial/01-the-idea-and-the-first-check.md).
+
+| Part | |
+|---|---|
+| [1](docs/tutorial/01-the-idea-and-the-first-check.md) | The idea, and the first check |
+| [2](docs/tutorial/02-install-the-tools.md) | Install the tools |
+| [3](docs/tutorial/03-write-a-part-that-checks-itself.md) | Write a part that checks itself |
+| [4](docs/tutorial/04-make-it-fail-on-purpose.md) | Make it fail on purpose |
+| [5](docs/tutorial/05-look-at-the-part.md) | Look at the part, and check your checker |
+| [6](docs/tutorial/06-teach-claude-the-house-rules.md) | Teach Claude the house rules |
+| [7](docs/tutorial/07-the-gimp-bridge.md) | The GIMP bridge |
+| [8](docs/tutorial/08-freecads-live-bridge.md) | FreeCAD's live bridge |
+| [9](docs/tutorial/09-prove-a-bridge-before-you-trust-it.md) | Prove a bridge before you trust it |
+| [10](docs/tutorial/10-what-this-cannot-tell-you.md) | What this setup cannot tell you |
+| [11](docs/tutorial/11-from-a-drawing-to-a-model.md) | From a drawing to a model |
+| [12](docs/tutorial/12-check-the-rig.md) | Check the rig |
+
+Short on time: read parts 1 and 4, run the two commands at the end of part 4, and stop.
+
 ## What's in here
 
 | Path | What it is |
@@ -50,7 +73,10 @@ for that session only.
 | `tools/doctor.sh` | Read-only environment check. |
 | `tools/install-freecad-addon.sh` | Installs the FreeCAD MCP addon into the directory FreeCAD itself reports. |
 | `tools/mcp_probe.py` | Stdlib-only stdio client: `initialize` → `tools/list` → `tools/call`, to prove a bridge before restarting Claude. |
+| `tools/slice_report.py` | Summarises a sliced G-code file and flags a tiny first layer (a model that slices "successfully" and will not stay on the bed). Standard library only. |
+| `tools/check_rig.py` | Fails a rigged `.glb` whose joints deform nothing (tutorial part 12). Standard library + numpy. |
 | `tools/render_stl_iso.py` | ~100-line z-buffered STL preview (numpy + Pillow) for display-less machines. |
+| `examples/skinned-tube/` | A tiny rigged tube, and a `RIG_BREAK=1` switch that writes the broken version `check_rig.py` must catch. |
 | `mcp/mcp.json.example` | A project-level `.mcp.json` for both bridges. |
 
 The skills are real Claude Code skills (`SKILL.md` with frontmatter), so Claude
@@ -72,10 +98,11 @@ installing, because each exists to run code on your machine.
 
 GIMP: `uvx gimp-agent-mcp install-plugin`, restart GIMP, then
 *Filters → Development → Start Agent Bridge*.
-FreeCAD: `./tools/install-freecad-addon.sh --autostart` (installs into the
-directory FreeCAD itself reports and enables auto-start), then restart FreeCAD —
-the RPC server comes up on `127.0.0.1:9875` with no clicks. Without
-`--autostart`, pick the *MCP Addon* workbench and tick *Auto-Start Server* by hand.
+FreeCAD: `./tools/install-freecad-addon.sh` (installs into the directory FreeCAD itself
+reports), then start the RPC server per session from the *MCP Addon* workbench.
+`--autostart` makes the server come up on `127.0.0.1:9875` every time FreeCAD opens, with
+no clicks, **and no auth token by default**: only turn it on if you also set the addon's
+token (tutorial part 8).
 
 **Security:** both bridges bind to loopback and expose an arbitrary-code
 endpoint (`gimp_run_python`, `execute_code`) that runs with your user's
@@ -86,6 +113,7 @@ on the FreeCAD addon's *Remote Connections* without setting an auth token.
 
 | Date | What | Where |
 |---|---|---|
+| 2026-10-04 | `mount_plate.py` good (27 checks) and broken (5 failures), the `freecadcmd` exit-code table, the `/tmp` sandbox trap, `render_stl_iso.py`, `check_rig.py` and `examples/skinned-tube/` (Khronos validator 0/0), a headless Bambu Studio slice of the plate (1 h 37 m) and `slice_report.py` | FreeCAD 1.1.4 Flatpak, Bambu Studio 2.8.2, Linux |
 | 2026-10-02 | `mount_plate.py` (good + deliberately broken), `doctor.sh`, `install.sh`, `install-freecad-addon.sh --dest`, `render_stl_iso.py` | FreeCAD 1.0.2, macOS |
 | 2026-10-02 | GIMP bridge 0.5.0: `install-plugin`, `doctor`, `smoke` (24 checks, headless), `mcp_probe.py` (39 tools; opened an image, read a pixel back to the known value) | GIMP 3.2.6, macOS |
 | 2026-10-02 | Both bridges as native Claude Code tools after restart: committed STEP loaded live = 24957.05 mm³ (hand-computed 24957.05); GIMP pixel read-back and grid-overlay render |
