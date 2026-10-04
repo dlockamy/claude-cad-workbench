@@ -7,8 +7,8 @@ The idea in one line: Claude writes the CAD as *code*, runs it headless, and the
 code **fails loudly** when the geometry is wrong — so "it exported without an
 error" is never the bar.
 
-**New here? Start with the [step-by-step tutorial](docs/tutorial/README.md)**: ten short parts, each ending in a check you can run,
-from the first headless command to taking a drawing to a rigged glTF.
+**New here? Start with the [step-by-step tutorial](docs/tutorial/README.md)**: twelve short parts, each ending in a check you can run and
+a link to the next, from the first headless command to taking a drawing to a rigged glTF.
 
 The long version, in a single read, is the blog post: *Setting up FreeCAD, GIMP and Claude to design 3D models*
 (<https://dlockamy.com/blog/>).
@@ -41,6 +41,8 @@ for that session only.
 
 ## The tutorial
 
+Twelve short parts; each links to the next, so you can read straight through. [Start with part 1](docs/tutorial/01-the-idea-and-the-first-check.md).
+
 | Part | |
 |---|---|
 | [1](docs/tutorial/01-the-idea-and-the-first-check.md) | The idea, and the first check |
@@ -51,8 +53,10 @@ for that session only.
 | [6](docs/tutorial/06-teach-claude-the-house-rules.md) | Teach Claude the house rules |
 | [7](docs/tutorial/07-the-gimp-bridge.md) | The GIMP bridge |
 | [8](docs/tutorial/08-freecads-live-bridge.md) | FreeCAD's live bridge |
-| [9](docs/tutorial/09-what-this-cannot-tell-you.md) | What this setup cannot tell you |
-| [10](docs/tutorial/10-from-a-drawing-to-a-rigged-model.md) | From a drawing to a rigged model |
+| [9](docs/tutorial/09-prove-a-bridge-before-you-trust-it.md) | Prove a bridge before you trust it |
+| [10](docs/tutorial/10-what-this-cannot-tell-you.md) | What this setup cannot tell you |
+| [11](docs/tutorial/11-from-a-drawing-to-a-model.md) | From a drawing to a model |
+| [12](docs/tutorial/12-check-the-rig.md) | Check the rig |
 
 Short on time: read parts 1 and 4, run the two commands at the end of part 4, and stop.
 
@@ -69,7 +73,7 @@ Short on time: read parts 1 and 4, run the two commands at the end of part 4, an
 | `tools/doctor.sh` | Read-only environment check. |
 | `tools/install-freecad-addon.sh` | Installs the FreeCAD MCP addon into the directory FreeCAD itself reports. |
 | `tools/mcp_probe.py` | Stdlib-only stdio client: `initialize` → `tools/list` → `tools/call`, to prove a bridge before restarting Claude. |
-| `tools/check_rig.py` | Fails a rigged `.glb` whose joints deform nothing (tutorial part 10). Standard library + numpy. |
+| `tools/check_rig.py` | Fails a rigged `.glb` whose joints deform nothing (tutorial part 12). Standard library + numpy. |
 | `tools/render_stl_iso.py` | ~100-line z-buffered STL preview (numpy + Pillow) for display-less machines. |
 | `examples/skinned-tube/` | A tiny rigged tube, and a `RIG_BREAK=1` switch that writes the broken version `check_rig.py` must catch. |
 | `mcp/mcp.json.example` | A project-level `.mcp.json` for both bridges. |

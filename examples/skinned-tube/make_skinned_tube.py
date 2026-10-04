@@ -5,7 +5,7 @@
     RIG_BREAK=1 python3 make_skinned_tube.py out.glb  # two rings only: the middle joint owns no vertices
 
 The broken file looks identical at rest and is a perfectly valid glTF. The middle joint is animated, owns no vertices, and so nothing
-blends across it: the clip kinks the tube instead of bending it. That is the failure ../../tools/check_rig.py exists to catch. Part 10 of the tutorial walks through it.
+blends across it: the clip kinks the tube instead of bending it. That is the failure ../../tools/check_rig.py exists to catch. Part 12 of the tutorial walks through it.
 """
 import json, math, os, struct, sys
 import numpy as np
