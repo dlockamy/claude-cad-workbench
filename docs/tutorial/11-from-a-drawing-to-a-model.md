@@ -2,7 +2,7 @@
 
 *Part 11 of 12 · about 15 minutes · in this part: turn one generated image into a skinned 3D model, and be honest about what is measured and what is guessed.*
 
-The last two parts go beyond printing: taking a *drawing* of a character (from a local image generator) to a textured, rigged 3D model that plays clips in a web viewer. We did it twice, on two private experiments chosen to differ: a near-symmetric push-pop mascot, which is a revolve and nearly follows from one front view, and a humanoid seen from the front only.
+The last two parts go beyond printing: taking a *drawing* of a character (from a local image generator) to a textured, rigged 3D model that plays clips in a web viewer. We did it twice, on two private experiments chosen to differ: a near-symmetric push-up pop mascot, which is a revolve and nearly follows from one front view, and a humanoid seen from the front only.
 
 > **Status.** Both were built, validated, viewed and **sliced** (step 7). **Neither has been printed**, and nobody has judged how the animations feel at real-time speed.
 
@@ -35,9 +35,11 @@ python3 tools/slice_report.py "$HOME/slice-out/plate_1.gcode"
 |---|---|---|---|
 | The part-3 plate | Success | 1 h 37 m | 11,319 mm of path |
 | Humanoid | Success | 4 h 33 m | 649 mm (two feet) |
-| Push-pop mascot | Success | 2 h 56 m | **38 mm of path, no flat face on the bed** |
+| Push-up pop mascot | Success | 2 h 56 m | **38 mm of path, no flat face on the bed** |
 
 All three "succeed". The mascot's stick ends in a rounded tip, so it stands on something close to a dot and will not stay on the bed, and nothing in the slicer's output says so. Turning supports on (same settings) raises the humanoid to 7 h 23 m and the mascot to 4 h 54 m, about 55 to 60% more filament each, which is also a hint that neither was designed to be printed upright. They were designed to be *looked at*. That is the same lesson as part 10, one stage later.
+
+The fix for the mascot is small: fuse a flat 36 mm by 2 mm base under the stick tip, and slice again. The first layer goes from 38 mm of path to **2,944 mm**, the slicer now reports a real bottom surface, and supports add about 17% filament instead of about 60%. It is a 100 mm figure on a 4 mm rod, so it may still wobble mid-print. **Still sliced, not printed.**
 
 ## What we learned on the way
 
