@@ -39,6 +39,8 @@ python3 tools/slice_report.py "$HOME/slice-out/plate_1.gcode"
 
 All three "succeed". The mascot's stick ends in a rounded tip, so it stands on something close to a dot and will not stay on the bed, and nothing in the slicer's output says so. Turning supports on (same settings) raises the humanoid to 7 h 23 m and the mascot to 4 h 54 m, about 55 to 60% more filament each, which is also a hint that neither was designed to be printed upright. They were designed to be *looked at*. That is the same lesson as part 10, one stage later.
 
+The fix for the mascot is small: fuse a flat 36 mm by 2 mm base under the stick tip, and slice again. The first layer goes from 38 mm of path to **2,944 mm**, the slicer now reports a real bottom surface, and supports add about 17% filament instead of about 60%. It is a 100 mm figure on a 4 mm rod, so it may still wobble mid-print. **Still sliced, not printed.**
+
 ## What we learned on the way
 
 **The back is invented.** On the revolve, one view nearly covers everything. On the humanoid, depth, the whole back, the scale and any hidden half of what it carries are all guesses. The back texture was a darkened, smoothed copy of the front with the face painted out, and it renders nearly black. The honest verdict: *works for the front; the rest is guessed.* Say so wherever you publish.
